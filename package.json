@@ -1,0 +1,22 @@
+{
+  "name": "footprint-app",
+  "version": "1.0.0",
+  "description": "旅游足迹网站",
+  "author": "giscafer",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "build": "nuxt build",
+    "start": "cross-env NODE_ENV=production node server/index.js",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "nuxt": "^2.0.0",
+    "cross-env": "^5.2.0",
+    "koa": "^2.6.2",
+    "element-ui": "^2.4.11"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
