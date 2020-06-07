@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+  <div style="100%">
+    <el-aside width="200px">
       <el-menu>
         <el-submenu v-for="item in data" :index="item.name" :key="item.name">
           <template slot="title">
@@ -45,5 +45,10 @@ export default {
 <style lang="scss" scoped>
 .el-aside {
   color: #333;
+  border-right: solid 1px #e6e6e6;
+  height: 100%;
+  .el-menu {
+    border-right: 0;
+  }
 }
 </style>

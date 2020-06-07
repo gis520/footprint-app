@@ -11,10 +11,12 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "nuxt": "^2.0.0",
     "cross-env": "^5.2.0",
+    "element-ui": "^2.4.11",
     "koa": "^2.6.2",
-    "element-ui": "^2.4.11"
+    "leaflet": "^1.6.0",
+    "nuxt": "^2.0.0",
+    "vue2-leaflet": "^2.5.2"
   },
   "devDependencies": {
     "node-sass": "^4.14.1",
