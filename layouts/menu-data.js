@@ -5,6 +5,11 @@ const MenuData = [
     meta: { title: "足迹点管理", icon: "location" }
   },
   {
+    path: "user",
+    name: "用户列表",
+    meta: { title: "用户列表", icon: "s-people" }
+  },
+  {
     path: "demo",
     name: "demo",
     meta: { title: "Demo", icon: "s-promotion" }

@@ -1,5 +1,5 @@
 const Router = require("koa-router");
-const { getUsers, signup } = require("../controller/user");
+const { getUsers, pageUserList, signup } = require("../controller/user");
 
 const router = new Router();
 
@@ -7,5 +7,7 @@ const router = new Router();
 router.get("/user/list", getUsers);
 // 用户注册，post
 router.post("/signup", signup);
+// 分页查询用户
+router.post("/user/pageUserList", pageUserList);
 
 module.exports = router;
