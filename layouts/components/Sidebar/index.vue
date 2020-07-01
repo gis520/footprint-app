@@ -12,24 +12,25 @@
             <template v-for="child in item.children">
               <el-submenu v-if="hasChildren(child)" :index="child.name" :key="child.name">
                 <template slot="title">{{item.meta.title}}</template>
-                <el-menu-item :index="child.name" :key="child.name">
-                  <!-- 这里 -->
-                  <nuxt-link :to="child.path">{{ child.meta.title }}</nuxt-link>
-                </el-menu-item>
+                <nuxt-link :to="child.path">
+                  <el-menu-item :index="child.name" :key="child.name">{{ child.meta.title }}</el-menu-item>
+                </nuxt-link>
               </el-submenu>
-              <el-menu-item v-else :index="child.name" :key="child.name">
-                <!-- 这里 -->
-                <nuxt-link :to="child.path">{{ child.meta.title }}</nuxt-link>
-              </el-menu-item>
+              <template v-else>
+                <nuxt-link :to="child.path" :key="child.path">
+                  <el-menu-item :index="child.name" :key="child.name">{{ child.meta.title }}</el-menu-item>
+                </nuxt-link>
+              </template>
             </template>
           </el-submenu>
           <template v-else>
             <!-- 只有一层菜单 -->
-            <el-menu-item :index="item.name" :key="item.name">
-              <i :class="getIconCls(item.meta.icon)"></i>
-              <!-- 这里 -->
-              <nuxt-link :to="item.path">{{ item.meta.title }}</nuxt-link>
-            </el-menu-item>
+            <nuxt-link :to="item.path" :key="item.path">
+              <el-menu-item :index="item.name" :key="item.name">
+                <i :class="getIconCls(item.meta.icon)"></i>
+                {{ item.meta.title }}
+              </el-menu-item>
+            </nuxt-link>
           </template>
         </template>
       </el-menu>

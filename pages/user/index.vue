@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { post } from '../../shared/request'
+import { post } from '@/shared/request'
 import STable from '@/components/Table'
 
 export default {

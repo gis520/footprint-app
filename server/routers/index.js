@@ -1,5 +1,6 @@
 const Router = require("koa-router");
 const { getUsers, pageUserList, signup } = require("../controller/user");
+const footprintCtrl = require("../controller/footprint");
 
 const router = new Router();
 
@@ -9,5 +10,10 @@ router.get("/user/list", getUsers);
 router.post("/signup", signup);
 // 分页查询用户
 router.post("/user/pageUserList", pageUserList);
+// 足迹点管理
+// 分页查询足迹点
+router.post("/footprint/pageList", footprintCtrl.pageList);
+// 新增足迹点
+router.post("/footprint/add", footprintCtrl.add);
 
 module.exports = router;
