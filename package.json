@@ -20,6 +20,8 @@
     "leaflet": "^1.6.0",
     "mongoose": "^5.9.19",
     "nuxt": "^2.0.0",
+    "qiniu": "^7.3.2",
+    "uuid": "^8.2.0",
     "vue2-leaflet": "^2.5.2"
   },
   "devDependencies": {

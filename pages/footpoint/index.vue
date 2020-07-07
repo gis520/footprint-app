@@ -56,31 +56,35 @@
               cancel-button-text="取消"
               icon="el-icon-info"
               icon-color="red"
-              title="是否确认解除该记录？"
+              title="是否确认删除该记录？"
               @onConfirm="handleDelete(row)"
             >
-              <el-button slot="reference" size="mini" type="info">解除</el-button>
+              <el-button slot="reference" size="mini" type="info">删除</el-button>
             </el-popconfirm>
           </template>
         </el-table-column>
       </template>
     </s-table>
+    <CreatePointDialog :visible.sync="dialogVisible" @success="getList" />
   </div>
 </template>
 
 <script>
 import { post } from '@/shared/request'
 import STable from '@/components/Table'
+import CreatePointDialog from './create-point-dialog'
 
 export default {
-  components: { STable },
+  components: { STable, CreatePointDialog },
   data() {
     return {
+      dialogVisible: false,
+      initDialogData: {},
       columns: [
         {
           label: '国家', // 字段名称
           field: 'country', // 字段
-          minWidth: 190 // 自定义字段宽度，不写是自适应宽度 ，比如 companyName 字段
+          minWidth: 190 // 自定义字段宽度，不写是自适应宽度
         },
         {
           label: '城市',
@@ -93,13 +97,23 @@ export default {
           minWidth: 180
         },
         {
+          label: '经度',
+          field: 'longitude',
+          minWidth: 180
+        },
+        {
+          label: '纬度',
+          field: 'latitude',
+          minWidth: 180
+        },
+        {
           label: '旅游日期',
           field: 'travelDate',
           minWidth: 180
         },
         {
-          label: '新增时间',
-          field: 'createTime',
+          label: '描述',
+          field: 'description',
           minWidth: 180
         }
       ],
@@ -137,8 +151,8 @@ export default {
       }
       this.dialogVisible = true
     },
-    handleDelete({ allowForbidId }) {
-      deleteAllowForbid(allowForbidId).then(() => {
+    handleDelete({ _id }) {
+      post('/footprint/delete', { id: _id }).then(() => {
         successToast('删除成功')
         this.getList()
       })

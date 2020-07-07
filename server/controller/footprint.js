@@ -59,6 +59,7 @@ async function add(ctx) {
   let {
     country = "中国",
     city,
+    place,
     travelDate,
     longitude,
     latitude,
@@ -73,6 +74,7 @@ async function add(ctx) {
   let point = await Footprint.create({
     country,
     city,
+    place,
     travelDate,
     longitude,
     latitude,
