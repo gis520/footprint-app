@@ -20,3 +20,8 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## License
+
+- [WebGIS 入门和进阶实战](https://xiaozhuanlan.com/webgis)
+- [@giscafer](https://github.com/giscafer)

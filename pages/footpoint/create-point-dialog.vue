@@ -27,12 +27,12 @@
           <el-input v-model="formData.place" placeholder="请输入" clearable></el-input>
         </el-form-item>
         <el-form-item label="经度" prop="longitude">
-          <el-input v-model="formData.longitude" placeholder="请输入（后续实现自动获取）" clearable>
+          <el-input v-model="formData.longitude" placeholder="请输入（点击右侧按钮地图定位）" clearable>
             <el-button slot="append" icon="el-icon-location" @click="locationHandle"></el-button>
           </el-input>
         </el-form-item>
         <el-form-item label="纬度" prop="latitude">
-          <el-input v-model="formData.latitude" placeholder="请输入（后续实现自动获取）" clearable>
+          <el-input v-model="formData.latitude" placeholder="请输入（点击右侧按钮地图定位）" clearable>
             <el-button slot="append" icon="el-icon-location" @click="locationHandle"></el-button>
           </el-input>
         </el-form-item>
