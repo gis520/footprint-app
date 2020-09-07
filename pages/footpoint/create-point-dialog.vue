@@ -75,7 +75,12 @@ export default {
   name: 'CreatePointDialog',
   components: { SingleImage },
   inheritAttrs: false,
-  props: {},
+  props: {
+    data: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   data() {
     return {
       title: '足迹点新增',
@@ -154,7 +159,19 @@ export default {
   computed: {},
   created() {},
   methods: {
-    onOpen() {},
+    onOpen() {
+      console.log(this.data)
+
+      const { _id, travelDate, photos } = this.data
+      if (!_id) {
+        return
+      }
+      this.title = '足迹点编辑'
+      Object.assign(this.formData, this.data, {
+        travelDate: travelDate.split('~'),
+        photos: photos && Array.isArray(photos) ? photos[0] : photos, // 改成多图的时候此处要改
+      })
+    },
     onClose() {},
     close() {
       this.$emit('update:visible', false)
@@ -166,7 +183,10 @@ export default {
         console.log(params)
         // 临时改为单个文件，后续自己扩展图片上传组件支持多图片上传
         params.photos = [params.photos]
-        post('/footprint/add', params)
+        const endpoint = this.formData._id
+          ? '/footprint/edit'
+          : '/footprint/add'
+        post(endpoint, params)
           .then((res) => {
             this.$message.success('保存成功!')
             this.$emit('success', res)

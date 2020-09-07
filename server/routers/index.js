@@ -16,6 +16,10 @@ router.post("/user/pageUserList", pageUserList);
 router.post("/footprint/pageList", footprintCtrl.pageList);
 // 新增足迹点
 router.post("/footprint/add", footprintCtrl.add);
+// 编辑足迹点
+router.post("/footprint/edit", footprintCtrl.edit);
+// 删除足迹点
+router.post("/footprint/del", footprintCtrl.del);
 // 七牛云token
 router.get("/qiniu/upload/token", uploadCtrl.signature);
 

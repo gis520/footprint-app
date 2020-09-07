@@ -6,7 +6,7 @@
           <el-col :md="12" :lg="8" :xl="6">
             <el-form-item label="城市" prop="city">
               <el-input
-                v-model="listQuery.city"
+                v-model.trim="listQuery.city"
                 type="text"
                 placeholder="请输入"
                 :style="{width:'100%'}"
@@ -17,7 +17,7 @@
           <el-col :md="12" :lg="8" :xl="6">
             <el-form-item label="景点名称" prop="place">
               <el-input
-                v-model="listQuery.place"
+                v-model.trim="listQuery.place"
                 type="text"
                 placeholder="请输入"
                 :style="{width:'100%'}"
@@ -34,6 +34,13 @@
                 style="margin-left: 20px;"
                 @click="handleFilter"
               >查询</el-button>
+              <el-button
+                class="filter-item"
+                type="default"
+                icon="el-icon-search"
+                style="margin-left: 20px;"
+                @click="handleReset"
+              >清空</el-button>
               <el-button
                 class="filter-item"
                 style="margin-left: 20px;"
@@ -65,7 +72,7 @@
         </el-table-column>
       </template>
     </s-table>
-    <CreatePointDialog :visible.sync="dialogVisible" @success="getList" />
+    <CreatePointDialog :visible.sync="dialogVisible" :data="initDialogData" @success="getList" />
   </div>
 </template>
 
@@ -89,7 +96,7 @@ export default {
         {
           label: '城市',
           field: 'city',
-          widminWidthth: 180,
+          minWidth: 180,
         },
         {
           label: '景点',
@@ -99,12 +106,12 @@ export default {
         {
           label: '经度',
           field: 'longitude',
-          minWidth: 180,
+          minWidth: 100,
         },
         {
           label: '纬度',
           field: 'latitude',
-          minWidth: 180,
+          minWidth: 100,
         },
         {
           label: '旅游日期',
@@ -128,31 +135,21 @@ export default {
       this.listQuery.page = 1
       this.getList()
     },
+    handleReset() {
+      this.listQuery.page = 1
+      this.listQuery.place = ''
+      this.listQuery.city = ''
+    },
     handleCreate(row) {
       if (row) {
-        const {
-          country,
-          city,
-          place,
-          travelDate,
-          description,
-          photos = [],
-        } = row
-        Object.assign(this.initDialogData, {
-          country,
-          city,
-          place,
-          travelDate,
-          description,
-          photos,
-        })
+        Object.assign(this.initDialogData, row)
       } else {
         this.initDialogData = {}
       }
       this.dialogVisible = true
     },
     handleDelete({ _id }) {
-      post('/footprint/delete', { id: _id }).then(() => {
+      post('/footprint/del', { id: _id }).then(() => {
         successToast('删除成功')
         this.getList()
       })

@@ -12,7 +12,7 @@ const PageInfo = require("../common/pageInfo");
  */
 async function pageList(ctx) {
   // ctx.request.body post 请求的参数在body中
-  let { city = "", page = 1, size = 10 } = ctx.request.body;
+  let { city = "", place = "", page = 1, size = 10 } = ctx.request.body;
 
   let query = Footprint.find({});
   let conditions = {};
@@ -20,6 +20,11 @@ async function pageList(ctx) {
     city = city.trim();
     query.where("city", city);
     conditions["city"] = city;
+  }
+  if (place) {
+    place = place.trim();
+    query.where("place", place);
+    conditions["place"] = place;
   }
   // 每页大小
   query.skip((page - 1) * size);
@@ -89,4 +94,56 @@ async function add(ctx) {
   }
 }
 
-module.exports = { pageList, add };
+/**
+ * 编辑足迹点
+ * @param {Object} ctx
+ */
+async function edit(ctx) {
+  let {
+    _id,
+    country = "中国",
+    city,
+    place,
+    travelDate,
+    longitude,
+    latitude,
+    description,
+    photos = []
+  } = ctx.request.body;
+  if (!longitude || !latitude) {
+    ctx.body = new CommonResult(4000, "经纬度不能为空", null);
+    return;
+  }
+  let point = await Footprint.findById(_id);
+
+  Object.assign(point, {
+    country,
+    city,
+    place,
+    travelDate,
+    longitude,
+    latitude,
+    description,
+    photos
+  });
+  try {
+    const res = await point.save();
+    // console.log(res);
+    ctx.body = new CommonResult(2000, "保存成功", point);
+  } catch (err) {
+    console.log(err);
+    ctx.body == new CommonResult(5000, "保存失败", null);
+  }
+}
+
+async function del(ctx) {
+  const { _id } = ctx.request.body;
+  try {
+    const res = await Footprint.deleteOne({ id: _id });
+    ctx.body = new CommonResult(2000, "删除成功", res);
+  } catch (err) {
+    console.log(err);
+    ctx.body == new CommonResult(5000, "删除失败", null);
+  }
+}
+module.exports = { pageList, add, edit, del };
