@@ -27,16 +27,23 @@
           <el-input v-model="formData.place" placeholder="请输入" clearable></el-input>
         </el-form-item>
         <el-form-item label="经度" prop="longitude">
-          <el-input v-model="formData.longitude" placeholder="请输入（后续实现自动获取）" clearable></el-input>
+          <el-input v-model="formData.longitude" placeholder="请输入（后续实现自动获取）" clearable>
+            <el-button slot="append" icon="el-icon-location" @click="locationHandle"></el-button>
+          </el-input>
         </el-form-item>
         <el-form-item label="纬度" prop="latitude">
-          <el-input v-model="formData.latitude" placeholder="请输入（后续实现自动获取）" clearable></el-input>
+          <el-input v-model="formData.latitude" placeholder="请输入（后续实现自动获取）" clearable>
+            <el-button slot="append" icon="el-icon-location" @click="locationHandle"></el-button>
+          </el-input>
         </el-form-item>
         <el-form-item label="旅游日期" prop="travelDate">
           <el-date-picker
             v-model="formData.travelDate"
-            type="date"
-            placeholder="选择日期"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            format="yyyy-MM-dd"
             :style="{width: '100%'}"
           ></el-date-picker>
         </el-form-item>
@@ -72,6 +79,8 @@ export default {
   data() {
     return {
       title: '足迹点新增',
+      locateDialogVisible: false,
+
       formData: {
         country: undefined,
         city: undefined,
@@ -80,66 +89,66 @@ export default {
         description: undefined,
         longitude: undefined,
         latitude: undefined,
-        photos: undefined
+        photos: undefined,
       },
       rules: {
         country: [
           {
             required: true,
             message: '请输入',
-            trigger: 'blur'
-          }
+            trigger: 'blur',
+          },
         ],
         city: [
           {
             required: true,
             message: '请输入',
-            trigger: 'blur'
-          }
+            trigger: 'blur',
+          },
         ],
         place: [
           {
             required: true,
             message: '请输入景点',
-            trigger: 'blur'
-          }
+            trigger: 'blur',
+          },
         ],
         longitude: [
           {
             required: true,
             message: '请输入经度',
-            trigger: 'blur'
-          }
+            trigger: 'blur',
+          },
         ],
         latitude: [
           {
             required: true,
             message: '请输入纬度',
-            trigger: 'blur'
-          }
+            trigger: 'blur',
+          },
         ],
         travelDate: [
           {
             required: true,
             message: '请选择日期',
-            trigger: 'blur'
-          }
+            trigger: 'blur',
+          },
         ],
         description: [
           {
             required: true,
             message: '请输入描述',
-            trigger: 'blur'
-          }
+            trigger: 'blur',
+          },
         ],
         photos: [
           {
             required: true,
             message: '请上传附件',
-            trigger: 'blur'
-          }
-        ]
-      }
+            trigger: 'blur',
+          },
+        ],
+      },
     }
   },
   computed: {},
@@ -151,22 +160,28 @@ export default {
       this.$emit('update:visible', false)
     },
     handelConfirm() {
-      const params = { ...this.formData }
-      console.log(params)
-      // 临时改为单个文件，后续自己扩展图片上传组件支持多图片上传
-      params.photos = [params.photos]
-      post('/footprint/add', params)
-        .then(res => {
-          this.$message.success('保存成功!')
-          this.$emit('success', res)
-          this.close()
-        })
-        .catch(err => {
-          this.$message.error('保存失败!')
-          this.close()
-        })
-    }
-  }
+      this.$refs['elForm'].validate((valid) => {
+        if (!valid) return
+        const params = { ...this.formData }
+        console.log(params)
+        // 临时改为单个文件，后续自己扩展图片上传组件支持多图片上传
+        params.photos = [params.photos]
+        post('/footprint/add', params)
+          .then((res) => {
+            this.$message.success('保存成功!')
+            this.$emit('success', res)
+            this.close()
+          })
+          .catch((err) => {
+            this.$message.error('保存失败!')
+            this.close()
+          })
+      })
+    },
+    locationHandle() {
+      window.open('https://gis520.github.io/LngLatPicker/')
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>

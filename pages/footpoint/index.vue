@@ -84,42 +84,42 @@ export default {
         {
           label: '国家', // 字段名称
           field: 'country', // 字段
-          minWidth: 190 // 自定义字段宽度，不写是自适应宽度
+          minWidth: 120, // 自定义字段宽度，不写是自适应宽度
         },
         {
           label: '城市',
           field: 'city',
-          widminWidthth: 160
+          widminWidthth: 180,
         },
         {
           label: '景点',
           field: 'place',
-          minWidth: 180
+          minWidth: 180,
         },
         {
           label: '经度',
           field: 'longitude',
-          minWidth: 180
+          minWidth: 180,
         },
         {
           label: '纬度',
           field: 'latitude',
-          minWidth: 180
+          minWidth: 180,
         },
         {
           label: '旅游日期',
           field: 'travelDate',
-          minWidth: 180
+          minWidth: 180,
         },
         {
           label: '描述',
           field: 'description',
-          minWidth: 180
-        }
+          minWidth: 180,
+        },
       ],
       data: null,
       listLoading: false,
-      listQuery: {}
+      listQuery: {},
     }
   },
   created() {},
@@ -136,7 +136,7 @@ export default {
           place,
           travelDate,
           description,
-          photos = []
+          photos = [],
         } = row
         Object.assign(this.initDialogData, {
           country,
@@ -144,7 +144,7 @@ export default {
           place,
           travelDate,
           description,
-          photos
+          photos,
         })
       } else {
         this.initDialogData = {}
@@ -165,12 +165,18 @@ export default {
         Object.assign(this.listQuery, evt)
       }
       this.listLoading = true
-      post('/footprint/pageList', this.listQuery).then(response => {
+      post('/footprint/pageList', this.listQuery).then((response) => {
+        response.data.forEach((item) => {
+          item.travelDate =
+            item.travelDate && item.travelDate.length === 2
+              ? item.travelDate.join(' ~ ')
+              : item.travelDate.join('')
+        })
         this.data = response
         this.listLoading = false
       })
-    }
-  }
+    },
+  },
 }
 </script>
 <style scoped  lang='scss'>
