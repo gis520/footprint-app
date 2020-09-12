@@ -71,6 +71,7 @@
 <script>
 import { post } from '@/shared/request'
 import SingleImage from '@/components/Upload/SingleImage'
+import { formatDate } from '@/shared/utils'
 export default {
   name: 'CreatePointDialog',
   components: { SingleImage },
@@ -183,6 +184,8 @@ export default {
         console.log(params)
         // 临时改为单个文件，后续自己扩展图片上传组件支持多图片上传
         params.photos = [params.photos]
+        const d = params.travelDate
+        params.travelDate = [formatDate(d[0]), formatDate(d[1])]
         const endpoint = this.formData._id
           ? '/footprint/edit'
           : '/footprint/add'
@@ -199,7 +202,7 @@ export default {
       })
     },
     locationHandle() {
-      window.open('https://gis520.github.io/LngLatPicker/')
+      window.open('https://latlngpicker.surge.sh/')
     },
   },
 }
