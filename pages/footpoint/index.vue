@@ -55,9 +55,10 @@
     </div>
     <s-table :data="data" :loading="listLoading" :columns="columns" @query-change="getList">
       <template #action>
-        <el-table-column fixed="right" label="操作" width="150" align="center">
+        <el-table-column fixed="right" label="操作" width="240" align="center">
           <template slot-scope="{row}">
             <el-button size="mini" type="primary" @click="handleCreate(row)">编辑</el-button>
+            <el-button size="mini" type="success" @click="handleLocate(row)">定位</el-button>
             <el-popconfirm
               confirm-button-text="确定"
               cancel-button-text="取消"
@@ -66,7 +67,7 @@
               title="是否确认删除该记录？"
               @onConfirm="handleDelete(row)"
             >
-              <el-button slot="reference" size="mini" type="info">删除</el-button>
+              <el-button slot="reference" size="mini" type="danger">删除</el-button>
             </el-popconfirm>
           </template>
         </el-table-column>
@@ -152,6 +153,13 @@ export default {
       post('/footprint/del', { id: _id }).then(() => {
         successToast('删除成功')
         this.getList()
+      })
+    },
+    handleLocate(row) {
+      const { longitude, latitude } = row
+      this.$router.push({
+        path: '/',
+        query: { longitude, latitude },
       })
     },
     handlerSuccess() {

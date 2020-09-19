@@ -22,6 +22,7 @@
     "nuxt": "^2.0.0",
     "qiniu": "^7.3.2",
     "uuid": "^8.2.0",
+    "v-viewer": "^1.5.1",
     "vue2-leaflet": "^2.5.2"
   },
   "devDependencies": {

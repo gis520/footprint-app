@@ -28,6 +28,7 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
+    "@/plugins/viewer",
     "@/plugins/element-ui",
     { src: "@/plugins/vue-leaflet.js", ssr: false }
   ],
