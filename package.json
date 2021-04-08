@@ -7,13 +7,14 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
     "build": "nuxt build",
+    "client": "nuxt start",
     "start": "cross-env NODE_ENV=production node server/index.js",
     "generate": "nuxt generate"
   },
   "dependencies": {
     "axios": "^0.19.2",
     "cross-env": "^5.2.0",
-    "element-ui": "^2.4.11",
+    "element-ui": "^2.15.1",
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^9.0.1",
